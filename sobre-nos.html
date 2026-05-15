@@ -12,6 +12,15 @@
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-content">
+            <img src="img/251196890_570839684027500_887698789874510216_n-Photoroom 1.png" alt="La Bella" class="preloader-logo">
+            <div class="preloader-text-container">
+                <p class="preloader-text">Tradição italiana que atravessa gerações.</p>
+            </div>
+        </div>
+    </div>
 
     <header class="main-header">
         <div class="header-content">
@@ -36,11 +45,17 @@
 
     <main class="sobre-page">
 
-        <!-- BLOCO 1: A Origem (layout editorial como a referência) -->
+        <!-- BLOCO 1: A Origem (layout limpo com 3 colunas) -->
         <section class="story-block story-origin">
             <div class="story-origin-layout">
-                <!-- LADO ESQUERDO: título + imagem na borda + texto -->
-                <div class="story-origin-left">
+                
+                <!-- LADO ESQUERDO: Imagem 1 -->
+                <div class="story-img story-img--tall story-img--tilt-right">
+                    <img src="img/image 20.png" alt="Máquina de massa e preparo artesanal">
+                </div>
+
+                <!-- CENTRO: Título e Texto alinhados -->
+                <div class="story-origin-center">
                     <div class="story-origin-title">
                         <span class="subtitle-cursive">Conheça a</span>
                         <h1>Nossa<br>História</h1>
@@ -50,30 +65,18 @@
                             <span class="red"></span>
                         </div>
                     </div>
-                    <!-- Imagem na borda esquerda -->
-                    <div class="story-img story-img--small story-img--tilt-left story-origin-edge-img">
-                        <img src="img/image 25.png" alt="Mãos trabalhando a massa">
-                    </div>
                     <div class="story-text story-origin-text">
                         <p>Em 2019, numa cozinha simples do subúrbio do Rio de Janeiro, <strong>Dona Carmela</strong> fazia massa fresca para os vizinhos toda sexta-feira. O cheiro de farinha e ovos caipiras invadia a rua e as pessoas já esperavam na calçada.</p>
                         <p>O que começou como uma tradição de família — receitas herdadas da <em>nonna</em> calabresa — virou um fenômeno de boca a boca. Em poucos meses, os pedidos não cabiam mais na cozinha de casa.</p>
                         <p>...E foi assim que nasceu a <em>La Bella</em> <strong>— e a promessa de levar o sabor da Itália para a sua mesa!</strong></p>
                     </div>
                 </div>
-                <!-- LADO DIREITO: cluster de imagens sobrepostas -->
-                <div class="story-origin-right">
-                    <div class="story-img-cluster">
-                        <div class="story-img cluster-img-1 story-img--tilt-right">
-                            <img src="img/IMG_0871 1.webp" alt="Artesão preparando massas">
-                        </div>
-                        <div class="story-img cluster-img-2 story-img--tilt-left">
-                            <img src="img/image-Photoroom (6) 1.png" alt="Equipe La Bella">
-                        </div>
-                        <div class="story-img cluster-img-3">
-                            <img src="img/image 20.png" alt="Detalhe do processo artesanal">
-                        </div>
-                    </div>
+
+                <!-- LADO DIREITO: Imagem 2 -->
+                <div class="story-img story-img--tall story-img--tilt-left">
+                    <img src="img/IMG_0871 1.webp" alt="Artesão preparando massas com as mãos">
                 </div>
+
             </div>
         </section>
 
@@ -200,6 +203,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="main.js"></script>
 </body>
 

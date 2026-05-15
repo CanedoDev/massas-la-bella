@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -9,6 +9,15 @@
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-content">
+            <img src="img/251196890_570839684027500_887698789874510216_n-Photoroom 1.png" alt="La Bella" class="preloader-logo">
+            <div class="preloader-text-container">
+                <p class="preloader-text">A verdadeira arte da massa artesanal.</p>
+            </div>
+        </div>
+    </div>
 
     <header class="main-header">
         <div class="header-content">
@@ -22,8 +31,8 @@
                 <a href="sobre-nos.html">Sobre nós</a>
                 <a href="produtos.html">Produtos</a>
                 <a href="#">Blog</a>
-                <a href="#">Seja Nosso Parceiro</a>
-                <a href="#">Contato</a>
+                <a href="#partner-section">Seja Nosso Parceiro</a>
+                <a href="#contato">Contato</a>
             </nav>
             <div class="btn-container">
                 <a href="#" class="btn-loja">Loja Online</a>
@@ -58,6 +67,7 @@
 
         <!-- 2. O Problema -->
         <section class="problem-section">
+            <img src="img/bg-produtos.svg" alt="" class="section-bg-svg">
             <div class="problem-content">
                 <span class="subtitle-cursive">Cansado de massas sem sabor?</span>
                 <h2>Você não deveria ter que escolher entre praticidade e uma experiência gastronômica real. Jantares
@@ -156,6 +166,7 @@
 
         <!-- 5. A Solução (Produtos) -->
         <section class="products-section">
+            <img src="img/bg-produtos.svg" alt="" class="section-bg-svg">
             <div class="products-content">
                 <div class="section-header">
                     <span class="subtitle-cursive">Para o seu jantar</span>
@@ -170,33 +181,33 @@
 
                 <div class="products-grid">
                     <div class="product-card">
-                        <img src="img/image 50.png" alt="Fettuccine Paglia e Fieno">
+                        <img src="img/fettuccine paglia e fieno.webp" alt="Fettuccine Paglia e Fieno">
                         <h3>Fettuccine<br>Paglia e Fieno</h3>
                         <p>Massa fresca artesanal<br>com toque de espinafre</p>
                         <a href="#" class="btn-comprar">Comprar</a>
                     </div>
                     <div class="product-card">
-                        <img src="img/image 50.png" alt="Fettuccine Tradicional">
-                        <h3>Fettuccine<br>Tradicional</h3>
-                        <p>A clássica massa italiana<br>feita com grão duro</p>
+                        <img src="img/fettuccine misto.webp" alt="Fettuccine Misto">
+                        <h3>Fettuccine<br>Misto</h3>
+                        <p>A combinação perfeita<br>de sabores tradicionais</p>
                         <a href="#" class="btn-comprar">Comprar</a>
                     </div>
                     <div class="product-card">
-                        <img src="img/image 50.png" alt="Nhoque">
-                        <h3>Nhoque<br>de Batata</h3>
-                        <p>Textura incrivelmente<br>macia que derrete na boca</p>
+                        <img src="img/talharim manjericao.webp" alt="Talharim de Manjericão">
+                        <h3>Talharim<br>de Manjericão</h3>
+                        <p>Aroma fresco e sabor<br>marcante da horta</p>
                         <a href="#" class="btn-comprar">Comprar</a>
                     </div>
                     <div class="product-card">
-                        <img src="img/image 50.png" alt="Ravioli">
-                        <h3>Ravioli<br>de Queijo</h3>
-                        <p>Recheio generoso e<br>sabor inconfundível</p>
+                        <img src="img/spaghettini.webp" alt="Spaghettini Artesanal">
+                        <h3>Spaghettini<br>Artesanal</h3>
+                        <p>Fios delicados e leves<br>para molhos sofisticados</p>
                         <a href="#" class="btn-comprar">Comprar</a>
                     </div>
                 </div>
 
                 <div class="products-action">
-                    <a href="#" class="btn-solid-yellow">Ver Cardápio Completo</a>
+                    <a href="produtos.html" class="btn-solid-yellow">Ver Cardápio Completo</a>
                 </div>
             </div>
         </section>
@@ -263,6 +274,7 @@
 
         <!-- 7. CTA Direto -->
         <section class="cta-store-section">
+            <img src="img/bg-cta.svg" alt="" class="section-bg-svg">
             <div class="cta-container">
                 <div class="cta-content">
                     <span class="subtitle-cursive">Leve o sabor da Itália para sua casa</span>
@@ -273,7 +285,7 @@
         </section>
 
         <!-- 8. Parceiros (B2B) -->
-        <section class="partner-section">
+        <section class="partner-section" id="partner-section">
             <!-- Ilustração decorativa: folha de massa -->
             <img src="img/image-Photoroom (7) 4.webp" alt="" class="deco-img deco-partner-leaf" aria-hidden="true">
             <div class="partner-container">
@@ -409,7 +421,7 @@
         </section>
 
         <!-- 11. Contato -->
-        <section class="contact-section">
+        <section class="contact-section" id="contato">
             <div class="contact-container">
                 <div class="contact-grid">
                     <div class="contact-info">
@@ -529,8 +541,9 @@
         </div>
     </footer>
 
-    <!-- GSAP -->
+    <!-- GSAP & Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="main.js"></script>
 </body>
 

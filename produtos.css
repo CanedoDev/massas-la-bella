@@ -98,15 +98,14 @@
     height: 250px;
     border-radius: 8px;
     overflow: hidden;
-    background-color: #1a1a1a;
-    /* Fundo escuro como na referência (antes de carregar img) */
+    background-color: transparent;
     position: relative;
 }
 
 .catalog-item-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     transition: transform 0.5s ease;
 }
@@ -138,22 +137,7 @@
     max-width: 600px;
 }
 
-.catalog-item-content .btn-comprar {
-    display: inline-block;
-    border: 2px solid var(--gold);
-    color: var(--gold);
-    padding: 10px 25px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
 
-.catalog-item-content .btn-comprar:hover {
-    background: var(--gold);
-    color: var(--bg-creme);
-}
 
 /* ---- DECORATIVE IMAGES ---- */
 .deco-catalog-leaf {
