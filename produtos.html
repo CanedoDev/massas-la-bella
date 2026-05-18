@@ -4,8 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos | Massas La Bella</title>
-    <meta name="description" content="Conheça nosso cardápio completo de massas artesanais frescas e molhos especiais.">
+    <title>Massas Artesanais em Petrópolis | Cardápio La Bella</title>
+    <meta name="description" content="Explore nosso cardápio de massas artesanais frescas em Petrópolis. Fettuccine, talharim, lasanha e muito mais, feitos com ingredientes premium.">
+    <link rel="canonical" href="https://massaslabella.com.br/produtos.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://massaslabella.com.br/produtos.html">
+    <meta property="og:title" content="Massas Artesanais em Petrópolis | Cardápio La Bella">
+    <meta property="og:description" content="Descubra o sabor da tradição em cada corte. Massas frescas direto de nossa fábrica em Petrópolis.">
+    <meta property="og:image" content="img/og-image.png">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="produtos.css">
 </head>
@@ -14,7 +23,7 @@
     <!-- Preloader -->
     <div class="preloader">
         <div class="preloader-content">
-            <img src="img/251196890_570839684027500_887698789874510216_n-Photoroom 1.png" alt="La Bella" class="preloader-logo">
+            <img src="img/logo.webp" alt="La Bella" class="preloader-logo">
             <div class="preloader-text-container">
                 <p class="preloader-text">Descubra o sabor da tradição em cada corte.</p>
             </div>
@@ -25,9 +34,17 @@
         <div class="header-content">
             <div class="logo">
                 <a href="index.html">
-                    <img src="img/251196890_570839684027500_887698789874510216_n-Photoroom 1.png" alt="Massas La Bella">
+                    <img src="img/logo.webp" alt="Massas La Bella">
                 </a>
             </div>
+
+            <!-- Menu Hambúrguer para Mobile -->
+            <div class="burger-menu" id="burgerMenu" aria-label="Menu de Navegação" role="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
             <nav class="main-nav">
                 <a href="index.html">Início</a>
                 <a href="sobre-nos.html">Sobre nós</a>
@@ -35,6 +52,7 @@
                 <a href="#">Blog</a>
                 <a href="#">Seja Nosso Parceiro</a>
                 <a href="#">Contato</a>
+                <a href="#" class="btn-loja btn-mobile-only">Loja Online</a>
             </nav>
             <div class="btn-container">
                 <a href="#" class="btn-loja">Loja Online</a>
@@ -48,7 +66,7 @@
         <section class="products-hero">
             <div class="products-hero-content">
                 <span class="subtitle-cursive">Nosso Cardápio</span>
-                <h1>Massas Artesanais</h1>
+                <h1>Massas Artesanais em Petrópolis</h1>
                 <div class="separator-flags">
                     <span class="green"></span>
                     <span class="white"></span>
@@ -64,7 +82,7 @@
                     <!-- Produto 1 -->
                     <div class="catalog-item">
                         <div class="catalog-item-img">
-                            <img src="img/fettuccine paglia e fieno.webp" alt="Fettuccine Paglia e Fieno">
+                            <img src="img/fettuccine paglia e fieno.webp" alt="Fettuccine Paglia e Fieno Artesanal Petrópolis">
                         </div>
                         <div class="catalog-item-content">
                             <h3>Fettuccine Paglia e Fieno</h3>
@@ -100,7 +118,7 @@
                     <!-- Produto 4 -->
                     <div class="catalog-item">
                         <div class="catalog-item-img">
-                            <img src="img/lasanha.webp" alt="Massa para Lasanha">
+                            <img src="img/lasanha.webp" alt="Massa para Lasanha Artesanal Fresca">
                         </div>
                         <div class="catalog-item-content">
                             <h3>Massa para Lasanha</h3>
@@ -148,7 +166,7 @@
                     <!-- Produto 8 -->
                     <div class="catalog-item">
                         <div class="catalog-item-img">
-                            <img src="img/talharim manjericao.webp" alt="Talharim de Manjericão">
+                            <img src="img/talharim manjericao.webp" alt="Talharim de Manjericão fresco em Petrópolis">
                         </div>
                         <div class="catalog-item-content">
                             <h3>Talharim de Manjericão</h3>
@@ -170,10 +188,7 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Ilustrações decorativas -->
-            <img src="img/image-Photoroom (7) 4.webp" alt="" class="deco-img deco-catalog-leaf" aria-hidden="true">
-            <img src="img/image-Photoroom 1.webp" alt="" class="deco-img deco-catalog-tomato" aria-hidden="true">
+
         </section>
 
         <!-- CTA Opcional -->
@@ -191,7 +206,7 @@
 
     <footer class="main-footer">
         <div class="footer-wave">
-            <img src="img/bg-empty.svg" alt="">
+            <img src="img/bg-empty.svg" alt="Onda Decorativa Footer">
         </div>
         <div class="footer-container">
             <a href="#" class="scroll-top">
@@ -201,10 +216,10 @@
             <div class="footer-content">
                 <div class="footer-left">
                     <div class="footer-contact-item">
-                        <img src="img/Pincode Keyboard.svg" alt="" class="footer-icon-dots">
+                        <img src="img/Pincode Keyboard.svg" alt="Ícone Endereço" class="footer-icon-dots">
                         <div class="footer-contact-text">
                             <h3>+55 34 999 99 99</h3>
-                            <p>Avenida Sakura 1234, Rio de Janeiro, RJ</p>
+                            <p>Avenida Sakura 1234, Petrópolis, RJ</p>
                         </div>
                     </div>
                 </div>

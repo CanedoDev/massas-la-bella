@@ -9,7 +9,7 @@
 
 /* ---- HERO ---- */
 .products-hero {
-    background-image: url('img/hero fundo.png');
+    background-image: url('img/hero fundo.webp');
     /* Pode usar outra imagem depois */
     background-size: cover;
     background-position: center;
@@ -79,13 +79,11 @@
     background-repeat: no-repeat;
     background-position: center;
     background-color: transparent;
-    padding: 60px 60px; /* Padding extra para as ondas não cortarem o conteúdo em nenhum lado */
+    padding: 60px 60px;
+    /* Padding extra para as ondas não cortarem o conteúdo em nenhum lado */
     gap: 40px;
-    transition: transform 0.3s ease;
-}
-
-.catalog-item:hover {
-    transform: translateY(-5px);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 /* Alternar lado nos itens pares */
@@ -107,11 +105,8 @@
     height: 100%;
     object-fit: contain;
     display: block;
-    transition: transform 0.5s ease;
-}
-
-.catalog-item:hover .catalog-item-img img {
-    transform: scale(1.05);
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .catalog-item-content {
@@ -139,20 +134,7 @@
 
 
 
-/* ---- DECORATIVE IMAGES ---- */
-.deco-catalog-leaf {
-    width: 120px;
-    right: 30px;
-    top: 150px;
-    opacity: 0.1;
-}
 
-.deco-catalog-tomato {
-    width: 150px;
-    left: -20px;
-    bottom: 200px;
-    opacity: 0.1;
-}
 
 /* ---- RESPONSIVE ---- */
 @media (max-width: 900px) {

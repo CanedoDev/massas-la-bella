@@ -4,9 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nós | Massas La Bella</title>
-    <meta name="description"
-        content="Conheça a história da La Bella Pasta. De uma cozinha familiar no Rio de Janeiro para a sua mesa, com tradição italiana e paixão artesanal.">
+    <title>Sobre Nós | Massas La Bella - Tradição Italiana em Petrópolis</title>
+    <meta name="description" content="Conheça a história da Massas La Bella. Da tradição familiar para a nossa fábrica artesanal em Petrópolis, levando o sabor autêntico da Itália para a Serra.">
+    <link rel="canonical" href="https://massaslabella.com.br/sobre-nos.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://massaslabella.com.br/sobre-nos.html">
+    <meta property="og:title" content="Sobre Nós | Massas La Bella - Tradição Italiana em Petrópolis">
+    <meta property="og:description" content="Conheça nossa história e nossa paixão por massas artesanais frescas na Cidade Imperial.">
+    <meta property="og:image" content="img/og-image.png">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sobre-nos.css">
 </head>
@@ -15,7 +23,7 @@
     <!-- Preloader -->
     <div class="preloader">
         <div class="preloader-content">
-            <img src="img/251196890_570839684027500_887698789874510216_n-Photoroom 1.png" alt="La Bella" class="preloader-logo">
+            <img src="img/logo.webp" alt="La Bella" class="preloader-logo">
             <div class="preloader-text-container">
                 <p class="preloader-text">Tradição italiana que atravessa gerações.</p>
             </div>
@@ -26,9 +34,17 @@
         <div class="header-content">
             <div class="logo">
                 <a href="index.html">
-                    <img src="img/251196890_570839684027500_887698789874510216_n-Photoroom 1.png" alt="Massas La Bella">
+                    <img src="img/logo.webp" alt="Massas La Bella">
                 </a>
             </div>
+
+            <!-- Menu Hambúrguer para Mobile -->
+            <div class="burger-menu" id="burgerMenu" aria-label="Menu de Navegação" role="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
             <nav class="main-nav">
                 <a href="index.html">Início</a>
                 <a href="sobre-nos.html" class="active">Sobre nós</a>
@@ -36,6 +52,7 @@
                 <a href="#">Blog</a>
                 <a href="#">Seja Nosso Parceiro</a>
                 <a href="#">Contato</a>
+                <a href="#" class="btn-loja btn-mobile-only">Loja Online</a>
             </nav>
             <div class="btn-container">
                 <a href="#" class="btn-loja">Loja Online</a>
@@ -51,7 +68,7 @@
                 
                 <!-- LADO ESQUERDO: Imagem 1 -->
                 <div class="story-img story-img--tall story-img--tilt-right">
-                    <img src="img/image 20.png" alt="Máquina de massa e preparo artesanal">
+                    <img src="img/image 20.webp" alt="Preparo artesanal de massas frescas em Petrópolis">
                 </div>
 
                 <!-- CENTRO: Título e Texto alinhados -->
@@ -66,15 +83,15 @@
                         </div>
                     </div>
                     <div class="story-text story-origin-text">
-                        <p>Em 2019, numa cozinha simples do subúrbio do Rio de Janeiro, <strong>Dona Carmela</strong> fazia massa fresca para os vizinhos toda sexta-feira. O cheiro de farinha e ovos caipiras invadia a rua e as pessoas já esperavam na calçada.</p>
-                        <p>O que começou como uma tradição de família — receitas herdadas da <em>nonna</em> calabresa — virou um fenômeno de boca a boca. Em poucos meses, os pedidos não cabiam mais na cozinha de casa.</p>
-                        <p>...E foi assim que nasceu a <em>La Bella</em> <strong>— e a promessa de levar o sabor da Itália para a sua mesa!</strong></p>
+                        <p>Em 2019, numa cozinha simples em Petrópolis, na Região Serrana, <strong>Dona Carmela</strong> fazia massa fresca para os vizinhos toda sexta-feira. O cheiro de farinha e ovos caipiras invadia a rua e as pessoas já esperavam na calçada.</p>
+                        <p>O que começou como uma tradição de família — receitas herdadas da <em>nonna</em> calabresa — virou um fenômeno na Cidade Imperial. Em poucos meses, os pedidos não cabiam mais na cozinha de casa.</p>
+                        <p>...E foi assim que nasceu a <em>La Bella</em> <strong>— e a promessa de levar o sabor da Itália para a sua mesa em Petrópolis!</strong></p>
                     </div>
                 </div>
 
                 <!-- LADO DIREITO: Imagem 2 -->
                 <div class="story-img story-img--tall story-img--tilt-left">
-                    <img src="img/IMG_0871 1.webp" alt="Artesão preparando massas com as mãos">
+                    <img src="img/ingredientes.webp" alt="Artesão da La Bella preparando massas à mão na Serra">
                 </div>
 
             </div>
@@ -82,11 +99,8 @@
 
         <!-- BLOCO 2: O Crescimento -->
         <section class="story-block story-growth">
-            <div class="story-grid story-grid--growth">
-                <div class="story-img story-img--wide">
-                    <img src="img/image-Photoroom (6) 1.png" alt="Equipe La Bella">
-                </div>
-                <div class="story-text">
+            <div class="story-grid story-grid--growth" style="grid-template-columns: 1fr; max-width: 700px;">
+                <div class="story-text" style="text-align: center;">
                     <h2>Da cozinha para o mundo</h2>
                     <p>Em 2021, a La Bella ganhou seu primeiro espaço de produção. Trouxemos uma máquina de massa
                         profissional da Itália — a mesma que a <em>nonna</em> sonhava em ter — e montamos uma equipe de
@@ -96,8 +110,6 @@
                         sempre foi.</p>
                 </div>
             </div>
-            <!-- Ilustração decorativa -->
-            <img src="img/image-Photoroom (2) 1.webp" alt="" class="deco-img deco-story-machine" aria-hidden="true">
         </section>
 
         <!-- BLOCO 3: Ingredientes / Valores -->
@@ -112,45 +124,38 @@
                             mão de quem sabe</strong>.</p>
                 </div>
                 <div class="story-img story-img--medium story-img--tilt-left">
-                    <img src="img/image 20.png" alt="Ingredientes frescos">
+                    <img src="img/image 20.webp" alt="Ingredientes naturais e frescos para massas gourmet">
                 </div>
                 <div class="story-img story-img--small story-img--offset-top">
-                    <img src="img/image 25.png" alt="Detalhe da massa">
+                    <img src="img/image 25.webp" alt="Detalhe da textura da massa artesanal La Bella">
                 </div>
             </div>
-            <!-- Ilustrações decorativas -->
-            <img src="img/unnamed-Photoroom 1.webp" alt="" class="deco-img deco-story-egg" aria-hidden="true">
-            <img src="img/image-Photoroom (7) 1.webp" alt="" class="deco-img deco-story-garlic" aria-hidden="true">
+            </div>
         </section>
 
         <!-- BLOCO 4: Hoje / CTA -->
         <section class="story-block story-today">
-            <div class="story-grid story-grid--today">
+            <div class="story-grid story-grid--today" style="grid-template-columns: 1fr 1fr;">
                 <div class="story-img story-img--tall story-img--tilt-right">
-                    <img src="img/IMG_0871 1.webp" alt="Produção artesanal">
+                    <img src="img/ingredientes.webp" alt="Produção artesanal">
                 </div>
                 <div class="story-text story-text--centered">
                     <h2>E hoje?</h2>
-                    <p>A La Bella entrega em todo o Rio de Janeiro e abastece dezenas de restaurantes que confiam na
+                    <p>A La Bella entrega em toda Petrópolis e região serrana, abastecendo dezenas de restaurantes que confiam na
                         nossa qualidade. Mas uma coisa não mudou: <strong>Dona Carmela ainda passa na produção toda
-                            sexta-feira</strong>, prova a massa e só libera quando o sabor está perfeito.</p>
+                        sexta-feira</strong>, prova a massa e só libera quando o sabor está perfeito.</p>
                     <p class="story-cta-text"><em>Porque para nós, cada pacote que sai daqui carrega a mesma promessa da
                             primeira sexta-feira na cozinha de casa.</em></p>
                     <a href="index.html#produtos" class="btn-primary">Provar agora</a>
                 </div>
-                <div class="story-img story-img--small story-img--tilt-left">
-                    <img src="img/image-Photoroom (6) 1.png" alt="Entrega La Bella">
-                </div>
             </div>
-            <!-- Ilustração decorativa: trigo saindo da borda -->
-            <img src="img/image-Photoroom (4) 3.webp" alt="" class="deco-img deco-story-wheat" aria-hidden="true">
         </section>
 
     </main>
 
     <footer class="main-footer">
         <div class="footer-wave">
-            <img src="img/bg-empty.svg" alt="">
+            <img src="img/bg-empty.svg" alt="Onda Decorativa Footer">
         </div>
         <div class="footer-container">
             <a href="#" class="scroll-top">
@@ -160,10 +165,10 @@
             <div class="footer-content">
                 <div class="footer-left">
                     <div class="footer-contact-item">
-                        <img src="img/Pincode Keyboard.svg" alt="" class="footer-icon-dots">
+                        <img src="img/Pincode Keyboard.svg" alt="Ícone Endereço" class="footer-icon-dots">
                         <div class="footer-contact-text">
                             <h3>+55 34 999 99 99</h3>
-                            <p>Avenida Sakura 1234, Rio de Janeiro, RJ</p>
+                            <p>Avenida Sakura 1234, Petrópolis, RJ</p>
                         </div>
                     </div>
                 </div>
