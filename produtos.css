@@ -144,6 +144,7 @@
         padding: 50px 20px;
         gap: 20px;
         text-align: center;
+        background-image: url('img/bg-produtos-mobile.svg');
     }
 
     .catalog-item-content {
@@ -184,4 +185,13 @@
     .catalog-item-content h3 {
         font-size: 26px;
     }
+}
+
+/* =================================================
+   REMOÇÃO DE SOMBRAS E BORDER-RADIUS DAS IMAGENS
+   ================================================= */
+img,
+.catalog-item-img {
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }

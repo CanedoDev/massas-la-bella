@@ -98,7 +98,7 @@ h6 {
 
 /* Header */
 .main-header {
-    background-image: url('img/bg-header-wave.svg');
+    background-image: url('img/bg-header-wave.svg?v=4');
     background-size: 100% 100%;
     background-position: top center;
     background-repeat: no-repeat;
@@ -668,7 +668,8 @@ h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 80px; /* Sincronia perfeita e espaçamento elegante */
+    gap: 80px;
+    /* Sincronia perfeita e espaçamento elegante */
     margin-top: 60px;
     width: 100%;
 }
@@ -681,7 +682,8 @@ h6 {
 }
 
 .text-col-left {
-    max-width: 480px; /* Tamanho proporcional para a cópia */
+    max-width: 480px;
+    /* Tamanho proporcional para a cópia */
     align-items: flex-start;
 }
 
@@ -693,7 +695,8 @@ h6 {
 }
 
 .partner-img-col {
-    max-width: 440px; /* Reduz a escala da imagem para equilibrar com o texto */
+    max-width: 440px;
+    /* Reduz a escala da imagem para equilibrar com o texto */
     align-items: center;
 }
 
@@ -1288,6 +1291,20 @@ h6 {
 
 @media (max-width: 768px) {
 
+    /* === BACKGROUND DE ONDAS SUAVES MOBILE === */
+    .problem-section {
+        background-image: url('img/bg-produtos-mobile.svg');
+        margin-top: -10px !important; /* Sobe um pouco para cobrir a linha branca de transição */
+        padding: 90px 20px 80px !important; /* Diminui o padding superior e inferior */
+        min-height: auto !important;
+    }
+
+    .products-section {
+        background-image: url('img/bg-produtos-mobile.svg');
+        padding: 110px 15px 70px !important;
+        min-height: auto !important;
+    }
+
     /* === HEADER & MENU HAMBÚRGUER === */
     .header-content {
         flex-direction: row !important;
@@ -1342,7 +1359,7 @@ h6 {
         width: 80%;
         height: 100vh;
         background-color: var(--bg-creme);
-        background-image: url('img/bg-menu.svg');
+        background-image: url('img/bg-menu-mobile.svg');
         /* Reutiliza background de ondas */
         background-size: cover;
         background-position: center;
@@ -1376,31 +1393,57 @@ h6 {
 
     /* === HERO SECTION AJUSTADO DENTRO DO SVG === */
     .hero {
-        padding: 40px 0 !important;
-        min-height: auto !important;
+        padding: 110px 0 90px !important;
+        min-height: 580px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     .hero-title-bg {
         width: 95% !important;
-        max-width: 480px;
-        margin: 0 auto;
+        max-width: 380px !important; /* Visual mais quadrado e compacto */
+        margin: 0 auto !important;
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .hero-title-bg picture {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    .hero-title-bg picture img {
+        width: 100% !important;
+        height: auto !important;
+        object-fit: contain !important;
     }
 
     .hero-title-inner {
-        width: 84% !important;
-        /* Segurança absoluta para não vazar do SVG */
+        position: absolute !important;
+        width: 82% !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     .hero-title-inner .subtitle-cursive {
-        font-size: 16px !important;
-        margin-bottom: 2px !important;
+        font-size: 28px !important;
+        margin-bottom: 0 !important;
+        line-height: 1.1 !important;
     }
 
     .hero-title-box h1 {
-        font-size: 19px !important;
-        /* Tamanho proporcional para encaixar perfeitamente */
-        margin-bottom: 8px !important;
-        line-height: 1.15 !important;
+        font-size: 22px !important; /* Fontes aumentadas para legibilidade excelente */
+        margin-bottom: 10px !important;
+        line-height: 1.2 !important;
     }
 
     .hero-title-box .separator-flags {
@@ -1410,15 +1453,14 @@ h6 {
     }
 
     .hero-title-box p {
-        font-size: 11px !important;
-        /* Super legível e compacto */
+        font-size: 13px !important; /* Fontes aumentadas para legibilidade excelente */
         line-height: 1.4 !important;
-        margin-bottom: 12px !important;
+        margin-bottom: 15px !important;
     }
 
     .hero-title-box .btn-primary {
-        font-size: 12px !important;
-        padding: 8px 22px !important;
+        font-size: 14px !important; /* Fontes aumentadas para legibilidade excelente */
+        padding: 10px 25px !important;
         margin-top: 5px !important;
     }
 
@@ -1451,20 +1493,58 @@ h6 {
         line-height: 1.7 !important;
     }
 
-    /* === OUTROS SEÇÕES E GRIDS === */
     .products-grid {
-        flex-direction: column !important;
-        gap: 30px !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+        margin-bottom: 30px !important;
     }
 
     .product-card {
         border-right: none !important;
-        border-bottom: 1px solid rgba(244, 196, 90, 0.3);
-        padding-bottom: 30px !important;
+        border-bottom: none !important;
+        padding: 15px 10px !important;
+        background: rgba(255, 255, 255, 0.4) !important;
+        border-radius: 12px !important;
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        box-shadow: 0 4px 15px rgba(244, 196, 90, 0.1) !important;
     }
 
-    .product-card:last-child {
-        border-bottom: none !important;
+    .product-card img {
+        max-width: 90% !important;
+        height: 110px !important;
+        object-fit: contain !important;
+        margin-bottom: 10px !important;
+    }
+
+    .product-card h3 {
+        font-size: 14px !important;
+        margin-bottom: 6px !important;
+        min-height: 34px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .product-card p {
+        font-size: 10px !important;
+        margin-bottom: 12px !important;
+        line-height: 1.3 !important;
+        color: var(--text-gray) !important;
+    }
+
+    .product-card .btn-comprar {
+        font-size: 13px !important;
+        padding: 6px 15px !important;
+        width: 100% !important;
+        max-width: 110px !important;
+        border-radius: 20px !important;
+        display: inline-block !important;
     }
 
     .plan-section,
@@ -1498,8 +1578,14 @@ h6 {
         text-align: center !important;
     }
 
+    .plan-step {
+        position: relative !important;
+        top: -30px !important;
+    }
+
     .partner-col.text-col-left {
         max-width: 100% !important;
+        align-items: center !important;
     }
 
     .section-header h2 {
@@ -1578,4 +1664,49 @@ h6 {
         padding-top: 20px !important;
         font-size: 11px !important;
     }
+
+    /* === CTA STORE MOBILE === */
+    .cta-store-section {
+        background-image: url('img/bg-cta-mobile.svg') !important;
+        padding: 90px 20px !important;
+        margin: -40px 0 !important; /* Mantém a sobreposição harmônica de ondas */
+        min-height: auto !important;
+        position: relative !important;
+        z-index: 5 !important;
+    }
+
+    .cta-content .subtitle-cursive {
+        font-size: 24px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .cta-content h2 {
+        font-size: 18px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 25px !important;
+        max-width: 320px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .cta-content .btn-primary {
+        font-size: 14px !important;
+        padding: 10px 25px !important;
+    }
+}
+
+/* =================================================
+   REMOÇÃO DE SOMBRAS E BORDER-RADIUS DAS IMAGENS
+   ================================================= */
+img,
+.about-img-col,
+.about-img-left,
+.about-img-right,
+.ingredients-img,
+.partner-img-col,
+.blog-img,
+.product-card img,
+.catalog-item-img {
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }

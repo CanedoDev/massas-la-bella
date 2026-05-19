@@ -10,16 +10,36 @@ document.addEventListener("DOMContentLoaded", () => {
         // Travar o scroll durante o preloader
         document.body.style.overflow = 'hidden';
 
-        // Preparar texto para animação letra por letra
+        // Preparar texto para animação letra por letra sem quebrar palavras no meio
         const textEl = document.querySelector('.preloader-text');
         if (textEl) {
-            const chars = textEl.textContent.split('');
+            const text = textEl.textContent;
             textEl.innerHTML = '';
-            chars.forEach(char => {
-                const span = document.createElement('span');
-                span.textContent = char === ' ' ? '\u00A0' : char;
-                span.className = 'preloader-char';
-                textEl.appendChild(span);
+            const words = text.split(' ');
+            words.forEach((word, wordIndex) => {
+                // Wrapper por palavra — impede quebra no meio
+                const wordSpan = document.createElement('span');
+                wordSpan.style.display = 'inline-block';
+                wordSpan.style.whiteSpace = 'nowrap';
+
+                word.split('').forEach(char => {
+                    const span = document.createElement('span');
+                    span.textContent = char;
+                    span.className = 'preloader-char';
+                    span.style.display = 'inline-block';
+                    wordSpan.appendChild(span);
+                });
+
+                textEl.appendChild(wordSpan);
+
+                // Espaço entre as palavras
+                if (wordIndex < words.length - 1) {
+                    const space = document.createElement('span');
+                    space.textContent = '\u00A0';
+                    space.className = 'preloader-char';
+                    space.style.display = 'inline-block';
+                    textEl.appendChild(space);
+                }
             });
         }
 
@@ -307,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 5. Todos os Botões (Entrada Scroll Padronizada e Suave)
-    const scrollButtons = document.querySelectorAll('.btn-loja, .btn-primary, .btn-comprar, .btn-solid-yellow, .btn-outline-gold, .btn-outline-gold-small, .products-action');
+    const scrollButtons = document.querySelectorAll('.btn-primary, .btn-comprar, .btn-solid-yellow, .btn-outline-gold, .btn-outline-gold-small, .products-action');
     scrollButtons.forEach(btn => {
         gsap.fromTo(btn,
             { scale: 0.4, opacity: 0 },
