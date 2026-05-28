@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Damion&family=Ribeye&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-creme: #FFF8ED;
+    --text-dark: #333333;
+    --text-gray: #666666;
+    --gold: #F4C45A;
+    --gold-hover: #e0b045;
+    --green: #488E4B;
+    --red: #C53B34;
+    --vh: 1vh;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-creme);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    min-height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Background SVG Animations */
+.bio-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.bio-bg svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bio-bg .desk-svg { display: block; }
+.bio-bg .mob-svg { display: none; }
+
+/* Layout Content */
+.bio-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: calc(var(--vh, 1vh) * 100);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 60px;
+}
+
+/* Header / Logo */
+.bio-header {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.bio-header img {
+    width: 250px;
+    max-width: 100%;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+}
+
+.bio-subtitle {
+    margin-top: 20px;
+    background: #ffffff;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-gray);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Links Container */
+.bio-links {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+/* Base Button Style */
+.bio-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 30px 20px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+    overflow: hidden;
+    aspect-ratio: 1;
+}
+
+.bio-btn:hover:not(.animating) {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.bio-btn.animating {
+    pointer-events: none;
+}
+
+.btn-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    z-index: 2;
+}
+
+.bio-btn span.btn-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    z-index: 2;
+}
+
+/* Botão: Loja Online */
+.btn-loja { background-color: var(--gold); color: #fff; }
+.btn-loja .btn-icon { color: #fff; fill: #fff; }
+
+/* Botão: WhatsApp */
+.btn-whatsapp { background-color: #ffffff; color: var(--green); }
+.btn-whatsapp .btn-icon { color: var(--green); fill: var(--green); }
+
+/* Botão: Instagram */
+.btn-instagram { background-color: var(--red); color: #fff; }
+.btn-instagram .btn-icon { color: #fff; fill: #fff; }
+
+/* Botão: Website */
+.btn-website { background-color: var(--text-dark); color: #fff; }
+.btn-website .btn-icon { color: #fff; fill: #fff; }
+
+
+/* ==========================================================================
+   MOTION WRAPPERS & ELEMENTS
+   ========================================================================== */
+
+/* Contêiner Geral dos Motions */
+.motion-wrap {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* --- Motion Loja Online --- */
+.loja-bag {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    z-index: 2;
+}
+
+.loja-bag svg {
+    width: 100%;
+    height: 100%;
+    fill: #ffffff;
+}
+
+.sparkle-container {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; height: 100%;
+}
+.sparkle {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+/* --- Motion WhatsApp --- */
+.whatsapp-dialog {
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
+.whatsapp-dialog svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--green);
+}
+.dialog-dots {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 4px;
+    margin-top: -4px;
+}
+.dialog-dots .dot {
+    width: 8px; height: 8px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+/* --- Motion Instagram --- */
+.insta-camera-emoji {
+    font-size: 50px;
+    position: relative;
+    z-index: 2;
+}
+.motion-instagram-wrap {
+    overflow: visible; 
+}
+#insta-hearts-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+}
+.heart-particle {
+    position: absolute;
+    font-size: 24px;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* --- Motion Website --- */
+.web-motion-icon {
+    width: 70px;
+    height: 70px;
+}
+.web-motion-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: #ffffff;
+}
+
+/* Footer */
+.bio-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-gray);
+    z-index: 10;
+    padding-bottom: 10px;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    right: 0;
+}
+.bio-footer p { margin-top: 15px; font-weight: 600; letter-spacing: 0.5px;}
+.bio-footer a { color: var(--gold); text-decoration: none; }
+
+
+/* ==========================================================================
+   RESPONSIVO (MOBILE)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .bio-content {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 20px 60px;
+        align-items: stretch;
+    }
+
+    .bio-header {
+        flex: none;
+        margin-top: 10px;
+    }
+
+    .bio-header img {
+        width: 180px;
+    }
+
+    .bio-subtitle {
+        margin-top: 10px;
+        padding: 6px 15px;
+        font-size: 12px;
+    }
+
+    .bio-links {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .bio-btn {
+        flex-direction: row;
+        aspect-ratio: auto;
+        padding: 15px 20px;
+        justify-content: flex-start;
+        gap: 15px;
+        border-radius: 40px; /* Estilo pílula */
+    }
+
+    .btn-icon {
+        margin-bottom: 0;
+        font-size: 24px;
+    }
+    
+    .bio-btn span.btn-text {
+        font-size: 16px;
+    }
+
+    .bio-bg .desk-svg { display: none; }
+    .bio-bg .mob-svg { display: block; }
+}

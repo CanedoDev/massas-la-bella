@@ -86,6 +86,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- SCROLL ANIMATIONS ---
 
+    // 0. Animated Background Waves (SVG)
+    const strokePaths = document.querySelectorAll(".animated-stroke-desk, .animated-stroke-mob");
+    strokePaths.forEach(path => {
+        const length = path.getTotalLength();
+        
+        // Estado inicial (linha apagada)
+        gsap.set(path, {
+            strokeDasharray: length,
+            strokeDashoffset: length
+        });
+        
+        // Animação ao scrollar
+        gsap.to(path, {
+            strokeDashoffset: 0,
+            duration: 1.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: path.closest('.section-bg-wave'),
+                start: "top 80%",
+                toggleActions: "play reverse play reverse"
+            }
+        });
+    });
+
     // 1. Textos com efeito de escrita (Split Text Manual)
     function splitTextManual(el) {
         if (!el) return;
