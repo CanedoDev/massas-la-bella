@@ -90,22 +90,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const strokePaths = document.querySelectorAll(".animated-stroke-desk, .animated-stroke-mob");
     strokePaths.forEach(path => {
         const length = path.getTotalLength();
-        
+
         // Estado inicial (linha apagada)
         gsap.set(path, {
             strokeDasharray: length,
             strokeDashoffset: length
         });
-        
+
         // Animação ao scrollar
         gsap.to(path, {
             strokeDashoffset: 0,
             duration: 1.2,
+            delay: 0.3, // Atraso proposital para não concorrer com os cards
             ease: "power2.out",
             scrollTrigger: {
                 trigger: path.closest('.section-bg-wave'),
-                start: "top 80%",
-                toggleActions: "play reverse play reverse"
+                start: "top 75%", // Começa um pouco depois para aliviar a carga inicial
+                toggleActions: "play none none reverse" // Mais leve que play reverse play reverse
             }
         });
     });
@@ -144,8 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 1a. Títulos (Animação de escrita elegante e compassada)
-    const titleElements = document.querySelectorAll('h1, h2, h3:not(.faq-question h3):not(.product-card h3), .subtitle-cursive, .section-subtitle');
+    // 1a. Títulos Principais (Animação de escrita)
+    // ATENÇÃO: Subtítulos (.subtitle-cursive, .section-subtitle) foram removidos daqui a pedido do usuário
+    const titleElements = document.querySelectorAll('h1, h2, h3:not(.faq-question h3):not(.product-card h3)');
     titleElements.forEach(el => {
         splitTextManual(el);
         const spans = el.querySelectorAll('.split-char');
@@ -153,13 +155,14 @@ document.addEventListener("DOMContentLoaded", () => {
             scrollTrigger: {
                 trigger: el,
                 start: "top 90%",
-                toggleActions: "play reverse play reverse"
+                toggleActions: "play none none reverse" 
             },
             opacity: 1,
             y: 0,
             stagger: 0.015,
-            duration: 1.2, // Aumentado para o ricochete elástico
-            ease: "elastic.out(1, 0.75)"
+            duration: 1.2,
+            ease: "elastic.out(1, 0.75)",
+            force3D: true 
         });
     });
 
@@ -182,68 +185,61 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     });
 
-    // 1b. Textos e Parágrafos (Revelação ultra rápida para não atrapalhar a leitura)
-    const paragraphElements = document.querySelectorAll('.hero-title-box p, .section-header p, .about-text-col p, .ingredients-text, .text-col-left p, .story-text p, .blog-excerpt, .products-hero-content p, .product-card h3');
+    // 1b. Textos, Parágrafos e Subtítulos (Fade normal e leve APENAS de opacidade, sem elástico ou pulos)
+    const paragraphElements = document.querySelectorAll('.subtitle-cursive, .section-subtitle, .hero-title-box p, .section-header p, .about-text-col p, .ingredients-text, .text-col-left p, .story-text p, .blog-excerpt, .products-hero-content p');
     paragraphElements.forEach(el => {
-        // Sem Split Text em parágrafos - apenas um fade-up simples e ultra-leve
-        gsap.fromTo(el,
-            { opacity: 0, y: 15 },
-            {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 95%",
-                    toggleActions: "play reverse play reverse"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 1.2,
-                ease: "elastic.out(1, 0.75)"
-            }
-        );
+        gsap.from(el, {
+            opacity: 0, // Apenas opacidade, sem 'y'
+            duration: 1.0,
+            ease: "power1.out", // Fade natural e leve
+            scrollTrigger: {
+                trigger: el,
+                start: "top 95%",
+                toggleActions: "play none none reverse" // Evita ficar piscando ao rolar pra cima e pra baixo
+            },
+            force3D: true
+        });
     });
 
     // 2. Cards na Home (Horizontal - Staggered entrance)
     const productsGrids = document.querySelectorAll('.products-grid');
     productsGrids.forEach(grid => {
         const items = grid.querySelectorAll('.product-card');
+        const images = grid.querySelectorAll('.product-card img');
         if (items.length > 0) {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: grid,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+
             // Animando o container do card apenas com fade normal
-            gsap.fromTo(items,
-                { opacity: 0, y: 20 },
+            tl.fromTo(items,
+                { opacity: 0 },
                 {
-                    scrollTrigger: {
-                        trigger: grid,
-                        start: "top 85%",
-                        toggleActions: "play reverse play reverse"
-                    },
                     opacity: 1,
-                    y: 0,
                     duration: 1.0,
-                    stagger: 0.08,
-                    ease: "power2.out"
+                    ease: "power2.out",
+                    force3D: true // <- A MÁGICA: Joga pra GPU antes do scroll!
                 }
             );
 
-            // Animando APENAS as imagens dentro do card com o elastic
-            const images = grid.querySelectorAll('.product-card img');
-            gsap.fromTo(images,
-                { scale: 0.4, opacity: 0 },
+            // Animando APENAS as imagens dentro do card sincronizadas com os cards
+            tl.fromTo(images,
+                { scale: 0.4 },
                 {
-                    scrollTrigger: {
-                        trigger: grid,
-                        start: "top 85%",
-                        toggleActions: "play reverse play reverse"
-                    },
                     scale: 1,
-                    opacity: 1,
                     duration: 1.3,
-                    stagger: 0.08,
                     ease: "elastic.out(1, 0.75)",
                     overwrite: "auto",
+                    force3D: true, // <- A MÁGICA: Joga pra GPU antes do scroll!
                     onComplete: () => {
                         gsap.set(images, { clearProps: "scale" });
                     }
-                }
+                },
+                "<" // Inicia exatamente no mesmo momento do stagger anterior
             );
         }
     });
@@ -352,7 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 5. Todos os Botões (Entrada Scroll Padronizada e Suave)
-    const scrollButtons = document.querySelectorAll('.btn-primary, .btn-comprar, .btn-solid-yellow, .btn-outline-gold, .btn-outline-gold-small, .products-action');
+    const scrollButtons = document.querySelectorAll('.btn-primary, .btn-solid-yellow, .btn-outline-gold, .btn-outline-gold-small, .products-action');
     scrollButtons.forEach(btn => {
         gsap.fromTo(btn,
             { scale: 0.4, opacity: 0 },

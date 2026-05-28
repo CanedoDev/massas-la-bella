@@ -363,8 +363,21 @@ h6 {
 }
 
 @media (max-width: 768px) {
-    .section-bg-wave .desk-svg { display: none; }
-    .section-bg-wave .mob-svg { display: block; }
+    .section-bg-wave .desk-svg {
+        display: none;
+    }
+
+    .section-bg-wave .mob-svg {
+        display: block;
+    }
+}
+
+/* OTIMIZAÇÃO: Aceleração de hardware para as "minhocas" (ondas SVG) */
+.animated-stroke-desk,
+.animated-stroke-mob {
+    will-change: stroke-dashoffset;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .problem-content {
@@ -585,7 +598,6 @@ h6 {
     padding: 20px 30px;
     border-right: 1px solid rgba(244, 196, 90, 0.4);
     border-radius: 8px;
-    will-change: transform, opacity;
     backface-visibility: hidden;
 }
 
@@ -600,7 +612,6 @@ h6 {
     object-fit: contain;
     border-radius: 12px;
     margin-bottom: 15px;
-    will-change: transform;
     backface-visibility: hidden;
 }
 

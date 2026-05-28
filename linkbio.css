@@ -58,7 +58,7 @@ body {
     align-items: center;
     justify-content: center;
     height: calc(var(--vh, 1vh) * 100);
-    max-width: 1200px;
+    max-width: 850px; /* Reduzido de 1200px para juntar os containers */
     margin: 0 auto;
     padding: 20px;
     gap: 60px;
