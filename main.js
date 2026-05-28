@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 1a. Títulos (Animação de escrita elegante e compassada)
-    const titleElements = document.querySelectorAll('h1, h2, h3:not(.faq-question h3), .subtitle-cursive, .section-subtitle');
+    const titleElements = document.querySelectorAll('h1, h2, h3:not(.faq-question h3):not(.product-card h3), .subtitle-cursive, .section-subtitle');
     titleElements.forEach(el => {
         splitTextManual(el);
         const spans = el.querySelectorAll('.split-char');
@@ -159,41 +159,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 1b. Textos e Parágrafos (Revelação ultra rápida para não atrapalhar a leitura)
-    const paragraphElements = document.querySelectorAll('.hero-title-box p, .section-header p, .about-text-col p, .ingredients-text, .text-col-left p, .story-text p, .blog-excerpt, .products-hero-content p');
+    const paragraphElements = document.querySelectorAll('.hero-title-box p, .section-header p, .about-text-col p, .ingredients-text, .text-col-left p, .story-text p, .blog-excerpt, .products-hero-content p, .product-card h3');
     paragraphElements.forEach(el => {
-        if (window.innerWidth <= 768) {
-            // Sem Split Text em parágrafos no mobile - apenas um fade-up simples e ultra-leve
-            gsap.fromTo(el,
-                { opacity: 0, y: 15 },
-                {
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 95%",
-                        toggleActions: "play reverse play reverse"
-                    },
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.2,
-                    ease: "elastic.out(1, 0.75)"
-                }
-            );
-        } else {
-            // Desktop: Split Text Manual completo
-            splitTextManual(el);
-            const spans = el.querySelectorAll('.split-char');
-            gsap.to(spans, {
+        // Sem Split Text em parágrafos - apenas um fade-up simples e ultra-leve
+        gsap.fromTo(el,
+            { opacity: 0, y: 15 },
+            {
                 scrollTrigger: {
                     trigger: el,
-                    start: "top 90%",
+                    start: "top 95%",
                     toggleActions: "play reverse play reverse"
                 },
                 opacity: 1,
                 y: 0,
-                stagger: 0.003, // Stagger super curto para leitura rápida
-                duration: 1.2,   // Duração rápida por caractere
+                duration: 1.2,
                 ease: "elastic.out(1, 0.75)"
-            });
-        }
+            }
+        );
     });
 
     // 2. Cards na Home (Horizontal - Staggered entrance)
@@ -201,7 +183,26 @@ document.addEventListener("DOMContentLoaded", () => {
     productsGrids.forEach(grid => {
         const items = grid.querySelectorAll('.product-card');
         if (items.length > 0) {
+            // Animando o container do card apenas com fade normal
             gsap.fromTo(items,
+                { opacity: 0, y: 20 },
+                {
+                    scrollTrigger: {
+                        trigger: grid,
+                        start: "top 85%",
+                        toggleActions: "play reverse play reverse"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.0,
+                    stagger: 0.08,
+                    ease: "power2.out"
+                }
+            );
+
+            // Animando APENAS as imagens dentro do card com o elastic
+            const images = grid.querySelectorAll('.product-card img');
+            gsap.fromTo(images,
                 { scale: 0.4, opacity: 0 },
                 {
                     scrollTrigger: {
@@ -211,12 +212,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     scale: 1,
                     opacity: 1,
-                    duration: 1.3, // Maior duração para apreciar o ricochete elástico
+                    duration: 1.3,
                     stagger: 0.08,
                     ease: "elastic.out(1, 0.75)",
                     overwrite: "auto",
                     onComplete: () => {
-                        gsap.set(items, { clearProps: "scale" });
+                        gsap.set(images, { clearProps: "scale" });
                     }
                 }
             );
@@ -334,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
             {
                 scrollTrigger: {
                     trigger: btn,
-                    start: "top 90%",
+                    start: "top 98%",
                     toggleActions: "play reverse play reverse"
                 },
                 scale: 1,

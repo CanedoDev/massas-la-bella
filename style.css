@@ -173,6 +173,10 @@ h6 {
     color: white;
 }
 
+.btn-mobile-only {
+    display: none;
+}
+
 .header-wave {
     position: absolute;
     bottom: -50px;
@@ -250,6 +254,10 @@ h6 {
     text-align: center;
     width: 90%;
     /* Garante que o texto não vaze nas bordas */
+}
+
+.hero-title-inner .subtitle-cursive {
+    color: var(--text-dark);
 }
 
 .hero-title-box h1 {
@@ -853,16 +861,39 @@ h6 {
 
 .blog-card {
     flex: 1;
-    background-color: transparent;
-    background-image: url('img/bg-blog-card.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    padding: 30px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     border: none;
     box-shadow: none;
     filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.05));
+    padding: 0;
+}
+
+.blog-card-bg-container {
+    width: 100%;
+    display: block;
+}
+
+.blog-card-bg {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.blog-card-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .blog-img {
@@ -1294,8 +1325,10 @@ h6 {
     /* === BACKGROUND DE ONDAS SUAVES MOBILE === */
     .problem-section {
         background-image: url('img/bg-produtos-mobile.svg');
-        margin-top: -10px !important; /* Sobe um pouco para cobrir a linha branca de transição */
-        padding: 90px 20px 80px !important; /* Diminui o padding superior e inferior */
+        margin-top: -10px !important;
+        /* Sobe um pouco para cobrir a linha branca de transição */
+        padding: 90px 20px 80px !important;
+        /* Diminui o padding superior e inferior */
         min-height: auto !important;
     }
 
@@ -1402,7 +1435,8 @@ h6 {
 
     .hero-title-bg {
         width: 95% !important;
-        max-width: 380px !important; /* Visual mais quadrado e compacto */
+        max-width: 380px !important;
+        /* Visual mais quadrado e compacto */
         margin: 0 auto !important;
         position: relative !important;
         display: flex !important;
@@ -1441,7 +1475,8 @@ h6 {
     }
 
     .hero-title-box h1 {
-        font-size: 22px !important; /* Fontes aumentadas para legibilidade excelente */
+        font-size: 22px !important;
+        /* Fontes aumentadas para legibilidade excelente */
         margin-bottom: 10px !important;
         line-height: 1.2 !important;
     }
@@ -1453,13 +1488,15 @@ h6 {
     }
 
     .hero-title-box p {
-        font-size: 13px !important; /* Fontes aumentadas para legibilidade excelente */
+        font-size: 13px !important;
+        /* Fontes aumentadas para legibilidade excelente */
         line-height: 1.4 !important;
         margin-bottom: 15px !important;
     }
 
     .hero-title-box .btn-primary {
-        font-size: 14px !important; /* Fontes aumentadas para legibilidade excelente */
+        font-size: 14px !important;
+        /* Fontes aumentadas para legibilidade excelente */
         padding: 10px 25px !important;
         margin-top: 5px !important;
     }
@@ -1669,7 +1706,8 @@ h6 {
     .cta-store-section {
         background-image: url('img/bg-cta-mobile.svg') !important;
         padding: 90px 20px !important;
-        margin: -40px 0 !important; /* Mantém a sobreposição harmônica de ondas */
+        margin: -40px 0 !important;
+        /* Mantém a sobreposição harmônica de ondas */
         min-height: auto !important;
         position: relative !important;
         z-index: 5 !important;
