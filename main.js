@@ -2,6 +2,7 @@ window.addEventListener("load", () => {
     // Registra os plugins do GSAP
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.config({ ignoreMobileResize: true }); // Evita recálculos quando a barra de endereço do celular some
         ScrollTrigger.defaults({ markers: false }); // Marcadores ativados para debug
     }
 
