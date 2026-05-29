@@ -572,4 +572,12 @@ window.addEventListener("load", () => {
             lastScrollY = window.scrollY;
         });
     }
+
+    // --- REFRESH SCROLLTRIGGER APÓS FONTES CARREGAREM ---
+    // Isso resolve o bug do layout mudar de tamanho após a fonte customizada carregar
+    if (document.fonts) {
+        document.fonts.ready.then(() => {
+            ScrollTrigger.refresh();
+        });
+    }
 });
