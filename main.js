@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Registra os plugins do GSAP
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.defaults({ markers: true }); // Marcadores ativados para debug
     }
 
     // --- PRELOADER ANIMATION ---
