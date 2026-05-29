@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ease: "power2.out",
                 scrollTrigger: {
                     trigger: path.closest('.section-bg-wave'),
-                    start: isMobile ? "top 85%" : "top 75%", // Começa um pouco depois para aliviar a carga inicial
+                    start: isMobile ? "top 80%" : "top 75%", // Começa um pouco depois para aliviar a carga inicial
                     toggleActions: "play none none reverse" // Mais leve que play reverse play reverse
                 }
             });
@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     scrollTrigger: {
                         trigger: el,
-                        start: isMobile ? "top 95%" : "top 90%",
+                        start: isMobile ? "top 85%" : "top 90%",
                         toggleActions: "play none none reverse" 
                     },
                     opacity: 1,
@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     scrollTrigger: {
                         trigger: el,
-                        start: "top 95%",
+                        start: isMobile ? "top 85%" : "top 95%",
                         toggleActions: "play reverse play reverse"
                     },
                     opacity: 1,
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ease: "power1.out", // Fade natural e leve
                     scrollTrigger: {
                         trigger: el,
-                        start: "top 95%",
+                        start: isMobile ? "top 85%" : "top 95%",
                         toggleActions: "play none none reverse" // Evita ficar piscando ao rolar pra cima e pra baixo
                     },
                     force3D: true
@@ -224,9 +224,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const images = grid.querySelectorAll('.product-card img');
             if (items.length > 0) {
                 const tl = gsap.timeline({
+                    delay: isMobile ? 0.5 : 0.2, // Gap de timing para não concorrer com a 'minhoca'
                     scrollTrigger: {
                         trigger: grid,
-                        start: isMobile ? "top 95%" : "top 85%",
+                        start: isMobile ? "top 85%" : "top 85%",
                         toggleActions: "play none none reverse"
                     }
                 });
@@ -268,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     scrollTrigger: {
                         trigger: item,
-                        start: isMobile ? "top 95%" : "top 80%", // Inicia quando o topo do item estiver a 80% da tela (metade inferior)
+                        start: isMobile ? "top 80%" : "top 80%", // Inicia quando o topo do item estiver a 80% da tela (metade inferior)
                         toggleActions: "play reverse play reverse"
                     },
                     scale: 1,
@@ -294,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     {
                         scrollTrigger: {
                             trigger: grid,
-                            start: isMobile ? "top 95%" : "top 85%",
+                            start: isMobile ? "top 80%" : "top 85%",
                             toggleActions: "play reverse play reverse"
                         },
                         scale: 1,
@@ -321,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     {
                         scrollTrigger: {
                             trigger: accordion,
-                            start: isMobile ? "top 95%" : "top 85%",
+                            start: isMobile ? "top 85%" : "top 85%",
                             toggleActions: "play reverse play reverse"
                         },
                         scale: 1,
@@ -347,7 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     scrollTrigger: {
                         trigger: img,
-                        start: isMobile ? "top 95%" : "top 85%",
+                        start: isMobile ? "top 80%" : "top 85%",
                         toggleActions: "play reverse play reverse"
                     },
                     scale: 1,
@@ -371,7 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     scrollTrigger: {
                         trigger: btn,
-                        start: "top 98%",
+                        start: isMobile ? "top 90%" : "top 98%",
                         toggleActions: "play reverse play reverse"
                     },
                     scale: 1,
