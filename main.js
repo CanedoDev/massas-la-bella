@@ -129,266 +129,206 @@ window.addEventListener("load", () => {
         }
     });
 
-    mm.add({
-        isDesktop: "(min-width: 769px)",
-        isMobile: "(max-width: 768px)"
-    }, (context) => {
-        let { isDesktop, isMobile } = context.conditions;
-
+    // ==========================================
+    // DESKTOP ANIMATIONS (>= 800px)
+    // ==========================================
+    mm.add("(min-width: 800px)", () => {
         // 0. Animated Background Waves (SVG)
         const strokePaths = document.querySelectorAll(".animated-stroke-desk, .animated-stroke-mob");
         strokePaths.forEach(path => {
             const length = path.getTotalLength();
-
-            // Estado inicial (linha apagada)
-            gsap.set(path, {
-                strokeDasharray: length,
-                strokeDashoffset: length
-            });
-
-            // Animação ao scrollar
+            gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
             gsap.to(path, {
                 strokeDashoffset: 0,
                 duration: 1.2,
-                delay: isMobile ? 0 : 0.3, // Atraso proposital para não concorrer com os cards
+                delay: 0.3,
                 ease: "power2.out",
-                scrollTrigger: {
-                    trigger: path.closest('.section-bg-wave'),
-                    start: isMobile ? "top 80%" : "top 75%", // Começa um pouco depois para aliviar a carga inicial
-                    toggleActions: "play none none reverse" // Mais leve que play reverse play reverse
-                }
+                scrollTrigger: { trigger: path.closest('.section-bg-wave'), start: "top 75%", toggleActions: "play none none reverse" }
             });
         });
 
         // 1a. Títulos Principais (Animação de escrita)
         titleElements.forEach(el => {
             const spans = el.querySelectorAll('.split-char');
-            gsap.fromTo(spans,
-                { opacity: 0, y: 10 },
-                {
-                    scrollTrigger: {
-                        trigger: el,
-                        start: isMobile ? "top 85%" : "top 90%",
-                        toggleActions: "play none none reverse" 
-                    },
-                    opacity: 1,
-                    y: 0,
-                    stagger: isMobile ? 0.005 : 0.015,
-                    duration: isMobile ? 0.8 : 1.2,
-                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
-                    force3D: true 
-                }
+            gsap.fromTo(spans, { opacity: 0, y: 10 },
+                { scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" }, opacity: 1, y: 0, stagger: 0.015, duration: 1.2, ease: "elastic.out(1, 0.75)", force3D: true }
             );
         });
 
-        // 1c. Perguntas do FAQ (Revelação de bloco suave sem SplitText)
+        // 1c. Perguntas do FAQ
         const faqQuestions = document.querySelectorAll('.faq-question h3');
         faqQuestions.forEach(el => {
-            gsap.fromTo(el,
-                { opacity: 0, y: isMobile ? 5 : 12 },
-                {
-                    scrollTrigger: {
-                        trigger: el,
-                        start: isMobile ? "top 85%" : "top 95%",
-                        toggleActions: "play reverse play reverse"
-                    },
-                    opacity: 1,
-                    y: 0,
-                    duration: isMobile ? 0.8 : 1.3, // Ricochete elástico visível
-                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out"
-                }
+            gsap.fromTo(el, { opacity: 0, y: 12 },
+                { scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play reverse play reverse" }, opacity: 1, y: 0, duration: 1.3, ease: "elastic.out(1, 0.75)" }
             );
         });
 
-        // 1b. Textos, Parágrafos e Subtítulos (Fade normal e leve APENAS de opacidade, sem elástico ou pulos)
+        // 1b. Textos, Parágrafos
         const paragraphElements = document.querySelectorAll('.subtitle-cursive, .section-subtitle, .hero-title-box p, .section-header p, .about-text-col p, .ingredients-text, .text-col-left p, .story-text p, .blog-excerpt, .products-hero-content p');
         paragraphElements.forEach(el => {
-            gsap.fromTo(el,
-                { opacity: 0 },
-                {
-                    opacity: 1,
-                    duration: isMobile ? 0.8 : 1.0,
-                    ease: "power1.out", // Fade natural e leve
-                    scrollTrigger: {
-                        trigger: el,
-                        start: isMobile ? "top 85%" : "top 95%",
-                        toggleActions: "play none none reverse" // Evita ficar piscando ao rolar pra cima e pra baixo
-                    },
-                    force3D: true
-                }
+            gsap.fromTo(el, { opacity: 0 },
+                { opacity: 1, duration: 1.0, ease: "power1.out", scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none reverse" }, force3D: true }
             );
         });
 
-        // 2. Cards na Home (Horizontal - Staggered entrance)
+        // 2. Cards na Home
         const productsGrids = document.querySelectorAll('.products-grid');
         productsGrids.forEach(grid => {
             const items = grid.querySelectorAll('.product-card');
             const images = grid.querySelectorAll('.product-card img');
             if (items.length > 0) {
-                const tl = gsap.timeline({
-                    delay: isMobile ? 0.5 : 0.2, // Gap de timing para não concorrer com a 'minhoca'
-                    scrollTrigger: {
-                        trigger: grid,
-                        start: isMobile ? "top 85%" : "top 85%",
-                        toggleActions: "play none none reverse"
-                    }
-                });
-
-                // Animando o container do card apenas com fade normal
-                tl.fromTo(items,
-                    { opacity: 0 },
-                    {
-                        opacity: 1,
-                        duration: isMobile ? 0.6 : 1.0,
-                        ease: "power2.out",
-                        force3D: true // <- A MÁGICA: Joga pra GPU antes do scroll!
-                    }
-                );
-
-                // Animando APENAS as imagens dentro do card sincronizadas com os cards
-                tl.fromTo(images,
-                    { scale: isMobile ? 0.8 : 0.4 },
-                    {
-                        scale: 1,
-                        duration: isMobile ? 0.8 : 1.3,
-                        ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
-                        overwrite: "auto",
-                        force3D: true, // <- A MÁGICA: Joga pra GPU antes do scroll!
-                        onComplete: () => {
-                            gsap.set(images, { clearProps: "scale" });
-                        }
-                    },
-                    "<" // Inicia exatamente no mesmo momento do stagger anterior
-                );
+                const tl = gsap.timeline({ scrollTrigger: { trigger: grid, start: "top 85%", toggleActions: "play none none reverse" }, delay: 0.2 });
+                tl.fromTo(items, { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "power2.out", force3D: true });
+                tl.fromTo(images, { scale: 0.4 }, { scale: 1, duration: 1.3, ease: "elastic.out(1, 0.75)", overwrite: "auto", force3D: true, onComplete: () => gsap.set(images, { clearProps: "scale" }) }, "<");
             }
         });
 
-        // 3. Itens no Catálogo (Vertical - Individual ScrollTrigger com efeito Elástico)
+        // 3. Itens no Catálogo
         const catalogItemsForScroll = document.querySelectorAll('.catalog-item');
         catalogItemsForScroll.forEach(item => {
-            gsap.fromTo(item,
-                { scale: isMobile ? 0.9 : 0.7, opacity: 0, y: isMobile ? 15 : 35 },
-                {
-                    scrollTrigger: {
-                        trigger: item,
-                        start: isMobile ? "top 80%" : "top 80%", // Inicia quando o topo do item estiver a 80% da tela (metade inferior)
-                        toggleActions: "play reverse play reverse"
-                    },
-                    scale: 1,
-                    opacity: 1,
-                    y: 0,
-                    duration: isMobile ? 0.6 : 1.4, // Ricochete elástico requintado
-                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
-                    overwrite: "auto",
-                    onComplete: () => {
-                        gsap.set(item, { clearProps: "scale,y" });
-                    }
-                }
+            gsap.fromTo(item, { scale: 0.7, opacity: 0, y: 35 },
+                { scrollTrigger: { trigger: item, start: "top 80%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, y: 0, duration: 1.4, ease: "elastic.out(1, 0.75)", overwrite: "auto", onComplete: () => gsap.set(item, { clearProps: "scale,y" }) }
             );
         });
 
-        // 3b. Cards de Blog e Planos (Staggered elastic entrance)
+        // 3b. Cards de Blog e Planos
         const cardGrids = document.querySelectorAll('.blog-grid, .plan-grid');
         cardGrids.forEach(grid => {
             const cards = grid.querySelectorAll('.blog-card, .plan-card');
             if (cards.length > 0) {
-                gsap.fromTo(cards,
-                    { scale: isMobile ? 0.9 : 0.6, opacity: 0 },
-                    {
-                        scrollTrigger: {
-                            trigger: grid,
-                            start: isMobile ? "top 80%" : "top 85%",
-                            toggleActions: "play reverse play reverse"
-                        },
-                        scale: 1,
-                        opacity: 1,
-                        duration: isMobile ? 0.6 : 1.3,
-                        stagger: isMobile ? 0.05 : 0.1,
-                        ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
-                        overwrite: "auto",
-                        onComplete: () => {
-                            gsap.set(cards, { clearProps: "scale" });
-                        }
-                    }
+                gsap.fromTo(cards, { scale: 0.6, opacity: 0 },
+                    { scrollTrigger: { trigger: grid, start: "top 85%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, duration: 1.3, stagger: 0.1, ease: "elastic.out(1, 0.75)", overwrite: "auto", onComplete: () => gsap.set(cards, { clearProps: "scale" }) }
                 );
             }
         });
 
-        // 3c. Cards do FAQ (Staggered elastic entrance para os boxes brancos)
+        // 3c. Cards do FAQ
         const faqAccordions = document.querySelectorAll('.faq-accordion');
         faqAccordions.forEach(accordion => {
             const items = accordion.querySelectorAll('.faq-item');
             if (items.length > 0) {
-                gsap.fromTo(items,
-                    { scale: isMobile ? 0.95 : 0.7, opacity: 0, y: isMobile ? 10 : 25 },
-                    {
-                        scrollTrigger: {
-                            trigger: accordion,
-                            start: isMobile ? "top 85%" : "top 85%",
-                            toggleActions: "play reverse play reverse"
-                        },
-                        scale: 1,
-                        opacity: 1,
-                        y: 0,
-                        duration: isMobile ? 0.6 : 1.4,
-                        stagger: isMobile ? 0.05 : 0.08,
-                        ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
-                        overwrite: "auto",
-                        onComplete: () => {
-                            gsap.set(items, { clearProps: "scale,y" });
-                        }
-                    }
+                gsap.fromTo(items, { scale: 0.7, opacity: 0, y: 25 },
+                    { scrollTrigger: { trigger: accordion, start: "top 85%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, y: 0, duration: 1.4, stagger: 0.08, ease: "elastic.out(1, 0.75)", overwrite: "auto", onComplete: () => gsap.set(items, { clearProps: "scale,y" }) }
                 );
             }
         });
 
-        // 4. Imagens soltas (Fotografias da história, ingredientes, etc.)
+        // 4. Imagens soltas
         const singleImages = document.querySelectorAll('.story-img, .ingredients-img');
         singleImages.forEach(img => {
-            gsap.fromTo(img,
-                { scale: isMobile ? 0.9 : 0.8, opacity: 0, y: isMobile ? 15 : 30 },
-                {
-                    scrollTrigger: {
-                        trigger: img,
-                        start: isMobile ? "top 80%" : "top 85%",
-                        toggleActions: "play reverse play reverse"
-                    },
-                    scale: 1,
-                    opacity: 1,
-                    y: 0,
-                    duration: isMobile ? 0.8 : 1.4, // Duração de ricochete elástico
-                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
-                    overwrite: "auto",
-                    onComplete: () => {
-                        gsap.set(img, { clearProps: "scale,y" });
-                    }
-                }
+            gsap.fromTo(img, { scale: 0.8, opacity: 0, y: 30 },
+                { scrollTrigger: { trigger: img, start: "top 85%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, y: 0, duration: 1.4, ease: "elastic.out(1, 0.75)", overwrite: "auto", onComplete: () => gsap.set(img, { clearProps: "scale,y" }) }
             );
         });
 
-        // 5. Todos os Botões (Entrada Scroll Padronizada e Suave)
+        // 5. Botões
         const scrollButtons = document.querySelectorAll('.btn-primary, .btn-solid-yellow, .btn-outline-gold, .btn-outline-gold-small, .products-action');
         scrollButtons.forEach(btn => {
-            gsap.fromTo(btn,
-                { scale: isMobile ? 0.8 : 0.4, opacity: 0 },
-                {
-                    scrollTrigger: {
-                        trigger: btn,
-                        start: isMobile ? "top 90%" : "top 98%",
-                        toggleActions: "play reverse play reverse"
-                    },
-                    scale: 1,
-                    opacity: 1,
-                    duration: isMobile ? 0.6 : 1.2, // Aumentado para o ricochete elástico
-                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
-                    overwrite: "auto",
-                    onComplete: () => {
-                        gsap.set(btn, { clearProps: "scale" });
-                    }
-                }
+            gsap.fromTo(btn, { scale: 0.4, opacity: 0 },
+                { scrollTrigger: { trigger: btn, start: "top 98%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, duration: 1.2, ease: "elastic.out(1, 0.75)", overwrite: "auto", onComplete: () => gsap.set(btn, { clearProps: "scale" }) }
+            );
+        });
+    });
+
+    // ==========================================
+    // MOBILE ANIMATIONS (< 800px)
+    // ==========================================
+    mm.add("(max-width: 799px)", () => {
+        // 0. Animated Background Waves (SVG)
+        const strokePaths = document.querySelectorAll(".animated-stroke-desk, .animated-stroke-mob");
+        strokePaths.forEach(path => {
+            const length = path.getTotalLength();
+            gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+            gsap.to(path, {
+                strokeDashoffset: 0,
+                duration: 1.2,
+                delay: 0, // Sem delay na minhoca mobile
+                ease: "power2.out",
+                scrollTrigger: { trigger: path.closest('.section-bg-wave'), start: "top 80%", toggleActions: "play none none reverse" }
+            });
+        });
+
+        // 1a. Títulos Principais
+        titleElements.forEach(el => {
+            const spans = el.querySelectorAll('.split-char');
+            gsap.fromTo(spans, { opacity: 0, y: 10 },
+                { scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" }, opacity: 1, y: 0, stagger: 0.005, duration: 0.8, ease: "power2.out", force3D: true }
             );
         });
 
+        // 1c. Perguntas do FAQ
+        const faqQuestions = document.querySelectorAll('.faq-question h3');
+        faqQuestions.forEach(el => {
+            gsap.fromTo(el, { opacity: 0, y: 5 },
+                { scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play reverse play reverse" }, opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+            );
+        });
+
+        // 1b. Textos, Parágrafos
+        const paragraphElements = document.querySelectorAll('.subtitle-cursive, .section-subtitle, .hero-title-box p, .section-header p, .about-text-col p, .ingredients-text, .text-col-left p, .story-text p, .blog-excerpt, .products-hero-content p');
+        paragraphElements.forEach(el => {
+            gsap.fromTo(el, { opacity: 0 },
+                { opacity: 1, duration: 0.8, ease: "power1.out", scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" }, force3D: true }
+            );
+        });
+
+        // 2. Cards na Home
+        const productsGrids = document.querySelectorAll('.products-grid');
+        productsGrids.forEach(grid => {
+            const items = grid.querySelectorAll('.product-card');
+            const images = grid.querySelectorAll('.product-card img');
+            if (items.length > 0) {
+                const tl = gsap.timeline({ scrollTrigger: { trigger: grid, start: "top 85%", toggleActions: "play none none reverse" }, delay: 0.5 });
+                tl.fromTo(items, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out", force3D: true });
+                tl.fromTo(images, { scale: 0.8 }, { scale: 1, duration: 0.8, ease: "power2.out", overwrite: "auto", force3D: true, onComplete: () => gsap.set(images, { clearProps: "scale" }) }, "<");
+            }
+        });
+
+        // 3. Itens no Catálogo
+        const catalogItemsForScroll = document.querySelectorAll('.catalog-item');
+        catalogItemsForScroll.forEach(item => {
+            gsap.fromTo(item, { scale: 0.9, opacity: 0, y: 15 },
+                { scrollTrigger: { trigger: item, start: "top 80%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "power2.out", overwrite: "auto", onComplete: () => gsap.set(item, { clearProps: "scale,y" }) }
+            );
+        });
+
+        // 3b. Cards de Blog e Planos
+        const cardGrids = document.querySelectorAll('.blog-grid, .plan-grid');
+        cardGrids.forEach(grid => {
+            const cards = grid.querySelectorAll('.blog-card, .plan-card');
+            if (cards.length > 0) {
+                gsap.fromTo(cards, { scale: 0.9, opacity: 0 },
+                    { scrollTrigger: { trigger: grid, start: "top 80%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, duration: 0.6, stagger: 0.05, ease: "power2.out", overwrite: "auto", onComplete: () => gsap.set(cards, { clearProps: "scale" }) }
+                );
+            }
+        });
+
+        // 3c. Cards do FAQ
+        const faqAccordions = document.querySelectorAll('.faq-accordion');
+        faqAccordions.forEach(accordion => {
+            const items = accordion.querySelectorAll('.faq-item');
+            if (items.length > 0) {
+                gsap.fromTo(items, { scale: 0.95, opacity: 0, y: 10 },
+                    { scrollTrigger: { trigger: accordion, start: "top 85%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, y: 0, duration: 0.6, stagger: 0.05, ease: "power2.out", overwrite: "auto", onComplete: () => gsap.set(items, { clearProps: "scale,y" }) }
+                );
+            }
+        });
+
+        // 4. Imagens soltas
+        const singleImages = document.querySelectorAll('.story-img, .ingredients-img');
+        singleImages.forEach(img => {
+            gsap.fromTo(img, { scale: 0.9, opacity: 0, y: 15 },
+                { scrollTrigger: { trigger: img, start: "top 80%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, y: 0, duration: 0.8, ease: "power2.out", overwrite: "auto", onComplete: () => gsap.set(img, { clearProps: "scale,y" }) }
+            );
+        });
+
+        // 5. Botões
+        const scrollButtons = document.querySelectorAll('.btn-primary, .btn-solid-yellow, .btn-outline-gold, .btn-outline-gold-small, .products-action');
+        scrollButtons.forEach(btn => {
+            gsap.fromTo(btn, { scale: 0.8, opacity: 0 },
+                { scrollTrigger: { trigger: btn, start: "top 90%", toggleActions: "play reverse play reverse" }, scale: 1, opacity: 1, duration: 0.6, ease: "power2.out", overwrite: "auto", onComplete: () => gsap.set(btn, { clearProps: "scale" }) }
+            );
+        });
     });
 
 
