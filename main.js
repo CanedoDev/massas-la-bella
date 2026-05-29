@@ -252,7 +252,7 @@ window.addEventListener("load", () => {
         titleElements.forEach(el => {
             const spans = el.querySelectorAll('.split-char');
             gsap.fromTo(spans, { opacity: 0, y: 10 },
-                { scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" }, opacity: 1, y: 0, stagger: 0.005, duration: 0.8, ease: "power2.out", force3D: true }
+                { scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" }, opacity: 1, y: 0, stagger: 0.015, duration: 0.8, ease: "power2.out", force3D: true }
             );
         });
 
