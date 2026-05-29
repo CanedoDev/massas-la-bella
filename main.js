@@ -85,33 +85,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- SCROLL ANIMATIONS ---
+    const mm = gsap.matchMedia();
 
-    // 0. Animated Background Waves (SVG)
-    const strokePaths = document.querySelectorAll(".animated-stroke-desk, .animated-stroke-mob");
-    strokePaths.forEach(path => {
-        const length = path.getTotalLength();
-
-        // Estado inicial (linha apagada)
-        gsap.set(path, {
-            strokeDasharray: length,
-            strokeDashoffset: length
-        });
-
-        // Animação ao scrollar
-        gsap.to(path, {
-            strokeDashoffset: 0,
-            duration: 1.2,
-            delay: 0.3, // Atraso proposital para não concorrer com os cards
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: path.closest('.section-bg-wave'),
-                start: "top 75%", // Começa um pouco depois para aliviar a carga inicial
-                toggleActions: "play none none reverse" // Mais leve que play reverse play reverse
-            }
-        });
-    });
-
-    // 1. Textos com efeito de escrita (Split Text Manual)
+    // 1. Textos com efeito de escrita (Split Text Manual) - PREPARAÇÃO DO DOM
     function splitTextManual(el) {
         if (!el) return;
         const text = el.innerText;
@@ -127,8 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const charSpan = document.createElement('span');
                 charSpan.textContent = char;
                 charSpan.style.display = 'inline-block';
-                charSpan.style.opacity = '0';
-                charSpan.style.transform = 'translateY(10px)';
                 charSpan.className = 'split-char';
                 wordSpan.appendChild(charSpan);
             });
@@ -145,230 +119,276 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 1a. Títulos Principais (Animação de escrita)
-    // ATENÇÃO: Subtítulos (.subtitle-cursive, .section-subtitle) foram removidos daqui a pedido do usuário
     const titleElements = document.querySelectorAll('h1, h2, h3:not(.faq-question h3):not(.product-card h3)');
     titleElements.forEach(el => {
-        splitTextManual(el);
-        const spans = el.querySelectorAll('.split-char');
-        gsap.to(spans, {
-            scrollTrigger: {
-                trigger: el,
-                start: "top 90%",
-                toggleActions: "play none none reverse" 
-            },
-            opacity: 1,
-            y: 0,
-            stagger: 0.015,
-            duration: 1.2,
-            ease: "elastic.out(1, 0.75)",
-            force3D: true 
-        });
+        if (!el.classList.contains('split-applied')) {
+            splitTextManual(el);
+            el.classList.add('split-applied');
+        }
     });
 
-    // 1c. Perguntas do FAQ (Revelação de bloco suave sem SplitText)
-    const faqQuestions = document.querySelectorAll('.faq-question h3');
-    faqQuestions.forEach(el => {
-        gsap.fromTo(el,
-            { opacity: 0, y: 12 },
-            {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 95%",
-                    toggleActions: "play reverse play reverse"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 1.3, // Ricochete elástico visível
-                ease: "elastic.out(1, 0.75)"
-            }
-        );
-    });
+    mm.add({
+        isDesktop: "(min-width: 769px)",
+        isMobile: "(max-width: 768px)"
+    }, (context) => {
+        let { isDesktop, isMobile } = context.conditions;
 
-    // 1b. Textos, Parágrafos e Subtítulos (Fade normal e leve APENAS de opacidade, sem elástico ou pulos)
-    const paragraphElements = document.querySelectorAll('.subtitle-cursive, .section-subtitle, .hero-title-box p, .section-header p, .about-text-col p, .ingredients-text, .text-col-left p, .story-text p, .blog-excerpt, .products-hero-content p');
-    paragraphElements.forEach(el => {
-        gsap.from(el, {
-            opacity: 0, // Apenas opacidade, sem 'y'
-            duration: 1.0,
-            ease: "power1.out", // Fade natural e leve
-            scrollTrigger: {
-                trigger: el,
-                start: "top 95%",
-                toggleActions: "play none none reverse" // Evita ficar piscando ao rolar pra cima e pra baixo
-            },
-            force3D: true
-        });
-    });
+        // 0. Animated Background Waves (SVG)
+        const strokePaths = document.querySelectorAll(".animated-stroke-desk, .animated-stroke-mob");
+        strokePaths.forEach(path => {
+            const length = path.getTotalLength();
 
-    // 2. Cards na Home (Horizontal - Staggered entrance)
-    const productsGrids = document.querySelectorAll('.products-grid');
-    productsGrids.forEach(grid => {
-        const items = grid.querySelectorAll('.product-card');
-        const images = grid.querySelectorAll('.product-card img');
-        if (items.length > 0) {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: grid,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
-                }
+            // Estado inicial (linha apagada)
+            gsap.set(path, {
+                strokeDasharray: length,
+                strokeDashoffset: length
             });
 
-            // Animando o container do card apenas com fade normal
-            tl.fromTo(items,
+            // Animação ao scrollar
+            gsap.to(path, {
+                strokeDashoffset: 0,
+                duration: 1.2,
+                delay: isMobile ? 0 : 0.3, // Atraso proposital para não concorrer com os cards
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: path.closest('.section-bg-wave'),
+                    start: isMobile ? "top 85%" : "top 75%", // Começa um pouco depois para aliviar a carga inicial
+                    toggleActions: "play none none reverse" // Mais leve que play reverse play reverse
+                }
+            });
+        });
+
+        // 1a. Títulos Principais (Animação de escrita)
+        titleElements.forEach(el => {
+            const spans = el.querySelectorAll('.split-char');
+            gsap.fromTo(spans,
+                { opacity: 0, y: 10 },
+                {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: isMobile ? "top 95%" : "top 90%",
+                        toggleActions: "play none none reverse" 
+                    },
+                    opacity: 1,
+                    y: 0,
+                    stagger: isMobile ? 0.005 : 0.015,
+                    duration: isMobile ? 0.8 : 1.2,
+                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
+                    force3D: true 
+                }
+            );
+        });
+
+        // 1c. Perguntas do FAQ (Revelação de bloco suave sem SplitText)
+        const faqQuestions = document.querySelectorAll('.faq-question h3');
+        faqQuestions.forEach(el => {
+            gsap.fromTo(el,
+                { opacity: 0, y: isMobile ? 5 : 12 },
+                {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 95%",
+                        toggleActions: "play reverse play reverse"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: isMobile ? 0.8 : 1.3, // Ricochete elástico visível
+                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out"
+                }
+            );
+        });
+
+        // 1b. Textos, Parágrafos e Subtítulos (Fade normal e leve APENAS de opacidade, sem elástico ou pulos)
+        const paragraphElements = document.querySelectorAll('.subtitle-cursive, .section-subtitle, .hero-title-box p, .section-header p, .about-text-col p, .ingredients-text, .text-col-left p, .story-text p, .blog-excerpt, .products-hero-content p');
+        paragraphElements.forEach(el => {
+            gsap.fromTo(el,
                 { opacity: 0 },
                 {
                     opacity: 1,
-                    duration: 1.0,
-                    ease: "power2.out",
-                    force3D: true // <- A MÁGICA: Joga pra GPU antes do scroll!
+                    duration: isMobile ? 0.8 : 1.0,
+                    ease: "power1.out", // Fade natural e leve
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 95%",
+                        toggleActions: "play none none reverse" // Evita ficar piscando ao rolar pra cima e pra baixo
+                    },
+                    force3D: true
                 }
             );
+        });
 
-            // Animando APENAS as imagens dentro do card sincronizadas com os cards
-            tl.fromTo(images,
-                { scale: 0.4 },
-                {
-                    scale: 1,
-                    duration: 1.3,
-                    ease: "elastic.out(1, 0.75)",
-                    overwrite: "auto",
-                    force3D: true, // <- A MÁGICA: Joga pra GPU antes do scroll!
-                    onComplete: () => {
-                        gsap.set(images, { clearProps: "scale" });
-                    }
-                },
-                "<" // Inicia exatamente no mesmo momento do stagger anterior
-            );
-        }
-    });
-
-    // 3. Itens no Catálogo (Vertical - Individual ScrollTrigger com efeito Elástico)
-    const catalogItemsForScroll = document.querySelectorAll('.catalog-item');
-    catalogItemsForScroll.forEach(item => {
-        gsap.fromTo(item,
-            { scale: 0.7, opacity: 0, y: 35 },
-            {
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 80%", // Inicia quando o topo do item estiver a 80% da tela (metade inferior)
-                    toggleActions: "play reverse play reverse"
-                },
-                scale: 1,
-                opacity: 1,
-                y: 0,
-                duration: 1.4, // Ricochete elástico requintado
-                ease: "elastic.out(1, 0.75)",
-                overwrite: "auto",
-                onComplete: () => {
-                    gsap.set(item, { clearProps: "scale,y" });
-                }
-            }
-        );
-    });
-
-    // 3b. Cards de Blog e Planos (Staggered elastic entrance)
-    const cardGrids = document.querySelectorAll('.blog-grid, .plan-grid');
-    cardGrids.forEach(grid => {
-        const cards = grid.querySelectorAll('.blog-card, .plan-card');
-        if (cards.length > 0) {
-            gsap.fromTo(cards,
-                { scale: 0.6, opacity: 0 },
-                {
+        // 2. Cards na Home (Horizontal - Staggered entrance)
+        const productsGrids = document.querySelectorAll('.products-grid');
+        productsGrids.forEach(grid => {
+            const items = grid.querySelectorAll('.product-card');
+            const images = grid.querySelectorAll('.product-card img');
+            if (items.length > 0) {
+                const tl = gsap.timeline({
                     scrollTrigger: {
                         trigger: grid,
-                        start: "top 85%",
-                        toggleActions: "play reverse play reverse"
-                    },
-                    scale: 1,
-                    opacity: 1,
-                    duration: 1.3,
-                    stagger: 0.1,
-                    ease: "elastic.out(1, 0.75)",
-                    overwrite: "auto",
-                    onComplete: () => {
-                        gsap.set(cards, { clearProps: "scale" });
+                        start: isMobile ? "top 95%" : "top 85%",
+                        toggleActions: "play none none reverse"
                     }
-                }
-            );
-        }
-    });
+                });
 
-    // 3c. Cards do FAQ (Staggered elastic entrance para os boxes brancos)
-    const faqAccordions = document.querySelectorAll('.faq-accordion');
-    faqAccordions.forEach(accordion => {
-        const items = accordion.querySelectorAll('.faq-item');
-        if (items.length > 0) {
-            gsap.fromTo(items,
-                { scale: 0.7, opacity: 0, y: 25 },
+                // Animando o container do card apenas com fade normal
+                tl.fromTo(items,
+                    { opacity: 0 },
+                    {
+                        opacity: 1,
+                        duration: isMobile ? 0.6 : 1.0,
+                        ease: "power2.out",
+                        force3D: true // <- A MÁGICA: Joga pra GPU antes do scroll!
+                    }
+                );
+
+                // Animando APENAS as imagens dentro do card sincronizadas com os cards
+                tl.fromTo(images,
+                    { scale: isMobile ? 0.8 : 0.4 },
+                    {
+                        scale: 1,
+                        duration: isMobile ? 0.8 : 1.3,
+                        ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
+                        overwrite: "auto",
+                        force3D: true, // <- A MÁGICA: Joga pra GPU antes do scroll!
+                        onComplete: () => {
+                            gsap.set(images, { clearProps: "scale" });
+                        }
+                    },
+                    "<" // Inicia exatamente no mesmo momento do stagger anterior
+                );
+            }
+        });
+
+        // 3. Itens no Catálogo (Vertical - Individual ScrollTrigger com efeito Elástico)
+        const catalogItemsForScroll = document.querySelectorAll('.catalog-item');
+        catalogItemsForScroll.forEach(item => {
+            gsap.fromTo(item,
+                { scale: isMobile ? 0.9 : 0.7, opacity: 0, y: isMobile ? 15 : 35 },
                 {
                     scrollTrigger: {
-                        trigger: accordion,
-                        start: "top 85%",
+                        trigger: item,
+                        start: isMobile ? "top 95%" : "top 80%", // Inicia quando o topo do item estiver a 80% da tela (metade inferior)
                         toggleActions: "play reverse play reverse"
                     },
                     scale: 1,
                     opacity: 1,
                     y: 0,
-                    duration: 1.4,
-                    stagger: 0.08,
-                    ease: "elastic.out(1, 0.75)",
+                    duration: isMobile ? 0.6 : 1.4, // Ricochete elástico requintado
+                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
                     overwrite: "auto",
                     onComplete: () => {
-                        gsap.set(items, { clearProps: "scale,y" });
+                        gsap.set(item, { clearProps: "scale,y" });
                     }
                 }
             );
-        }
+        });
+
+        // 3b. Cards de Blog e Planos (Staggered elastic entrance)
+        const cardGrids = document.querySelectorAll('.blog-grid, .plan-grid');
+        cardGrids.forEach(grid => {
+            const cards = grid.querySelectorAll('.blog-card, .plan-card');
+            if (cards.length > 0) {
+                gsap.fromTo(cards,
+                    { scale: isMobile ? 0.9 : 0.6, opacity: 0 },
+                    {
+                        scrollTrigger: {
+                            trigger: grid,
+                            start: isMobile ? "top 95%" : "top 85%",
+                            toggleActions: "play reverse play reverse"
+                        },
+                        scale: 1,
+                        opacity: 1,
+                        duration: isMobile ? 0.6 : 1.3,
+                        stagger: isMobile ? 0.05 : 0.1,
+                        ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
+                        overwrite: "auto",
+                        onComplete: () => {
+                            gsap.set(cards, { clearProps: "scale" });
+                        }
+                    }
+                );
+            }
+        });
+
+        // 3c. Cards do FAQ (Staggered elastic entrance para os boxes brancos)
+        const faqAccordions = document.querySelectorAll('.faq-accordion');
+        faqAccordions.forEach(accordion => {
+            const items = accordion.querySelectorAll('.faq-item');
+            if (items.length > 0) {
+                gsap.fromTo(items,
+                    { scale: isMobile ? 0.95 : 0.7, opacity: 0, y: isMobile ? 10 : 25 },
+                    {
+                        scrollTrigger: {
+                            trigger: accordion,
+                            start: isMobile ? "top 95%" : "top 85%",
+                            toggleActions: "play reverse play reverse"
+                        },
+                        scale: 1,
+                        opacity: 1,
+                        y: 0,
+                        duration: isMobile ? 0.6 : 1.4,
+                        stagger: isMobile ? 0.05 : 0.08,
+                        ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
+                        overwrite: "auto",
+                        onComplete: () => {
+                            gsap.set(items, { clearProps: "scale,y" });
+                        }
+                    }
+                );
+            }
+        });
+
+        // 4. Imagens soltas (Fotografias da história, ingredientes, etc.)
+        const singleImages = document.querySelectorAll('.story-img, .ingredients-img');
+        singleImages.forEach(img => {
+            gsap.fromTo(img,
+                { scale: isMobile ? 0.9 : 0.8, opacity: 0, y: isMobile ? 15 : 30 },
+                {
+                    scrollTrigger: {
+                        trigger: img,
+                        start: isMobile ? "top 95%" : "top 85%",
+                        toggleActions: "play reverse play reverse"
+                    },
+                    scale: 1,
+                    opacity: 1,
+                    y: 0,
+                    duration: isMobile ? 0.8 : 1.4, // Duração de ricochete elástico
+                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
+                    overwrite: "auto",
+                    onComplete: () => {
+                        gsap.set(img, { clearProps: "scale,y" });
+                    }
+                }
+            );
+        });
+
+        // 5. Todos os Botões (Entrada Scroll Padronizada e Suave)
+        const scrollButtons = document.querySelectorAll('.btn-primary, .btn-solid-yellow, .btn-outline-gold, .btn-outline-gold-small, .products-action');
+        scrollButtons.forEach(btn => {
+            gsap.fromTo(btn,
+                { scale: isMobile ? 0.8 : 0.4, opacity: 0 },
+                {
+                    scrollTrigger: {
+                        trigger: btn,
+                        start: "top 98%",
+                        toggleActions: "play reverse play reverse"
+                    },
+                    scale: 1,
+                    opacity: 1,
+                    duration: isMobile ? 0.6 : 1.2, // Aumentado para o ricochete elástico
+                    ease: isDesktop ? "elastic.out(1, 0.75)" : "power2.out",
+                    overwrite: "auto",
+                    onComplete: () => {
+                        gsap.set(btn, { clearProps: "scale" });
+                    }
+                }
+            );
+        });
+
     });
 
-    // 4. Imagens soltas (Fotografias da história, ingredientes, etc.)
-    const singleImages = document.querySelectorAll('.story-img, .ingredients-img');
-    singleImages.forEach(img => {
-        gsap.fromTo(img,
-            { scale: 0.8, opacity: 0, y: 30 },
-            {
-                scrollTrigger: {
-                    trigger: img,
-                    start: "top 85%",
-                    toggleActions: "play reverse play reverse"
-                },
-                scale: 1,
-                opacity: 1,
-                y: 0,
-                duration: 1.4, // Duração de ricochete elástico
-                ease: "elastic.out(1, 0.75)",
-                overwrite: "auto",
-                onComplete: () => {
-                    gsap.set(img, { clearProps: "scale,y" });
-                }
-            }
-        );
-    });
 
-    // 5. Todos os Botões (Entrada Scroll Padronizada e Suave)
-    const scrollButtons = document.querySelectorAll('.btn-primary, .btn-solid-yellow, .btn-outline-gold, .btn-outline-gold-small, .products-action');
-    scrollButtons.forEach(btn => {
-        gsap.fromTo(btn,
-            { scale: 0.4, opacity: 0 },
-            {
-                scrollTrigger: {
-                    trigger: btn,
-                    start: "top 98%",
-                    toggleActions: "play reverse play reverse"
-                },
-                scale: 1,
-                opacity: 1,
-                duration: 1.2, // Aumentado para o ricochete elástico
-                ease: "elastic.out(1, 0.75)",
-                overwrite: "auto",
-                onComplete: () => {
-                    gsap.set(btn, { clearProps: "scale" });
-                }
-            }
-        );
-    });
 
     // --- BUTTONS HOVER & CLICK ANIMATIONS ---
     const buttons = document.querySelectorAll('.btn-loja, .btn-primary, .btn-comprar, .btn-solid-yellow, .btn-outline-gold, .btn-outline-gold-small');
